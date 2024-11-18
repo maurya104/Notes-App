@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/summaries.css' %}" />
+<div class="summary-card">
+    <h2 class="summary-card__title">Note Summary</h2>
+    
+    <ul class="summary-card__list">
+        {% for sentence in summary %}
+        <li class="summary-card__item">
+            {{ sentence | striptags }}
+        </li>
+        {% empty %}
+        <li class="summary-card__item no-summary">No summary available.</li>
+        {% endfor %}
+    </ul>
+
+    <button class="btn home-btn" onclick="window.location.href=`{% url 'home' %}`;">
+        <i class="fa-solid fa-home"></i> Back to Home
+    </button>
+</div>
+{% endblock content %}

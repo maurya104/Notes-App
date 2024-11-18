@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        height: 100vh;
+        display: grid;
+        place-items: center;
+        background-color: #f5f5f5;
+        margin: 0;
+      }
+
+      .container {
+        width: 60%;
+        display: grid;
+        gap: 20px;
+      }
+
+      .edit-note__title {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+
+      .edit-note__description {
+        border: 1px solid #333;
+        border-radius: 5px;
+        background-color: white;
+        padding: 10px;
+      }
+
+      .tool-list {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .tool--btn {
+        border: none;
+        border-radius: 5px;
+        height: 30px;
+        width: 30px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      .tool--btn:hover {
+        background-color: #dddddd;
+      }
+
+      #output {
+        height: 200px;
+        padding: 10px;
+        border: none;
+        background-color: #f5f5f5;
+        overflow-y: auto;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="note-item__container edit-note">
+        <form id="noteForm" action="" method="POST">
+          {% csrf_token %}
+
+          <!-- Note Title -->
+          <input
+            type="text"
+            name="title"
+            class="edit-note__title"
+            placeholder="Note title..."
+            {%
+            if
+            note
+            %}
+            value="{{ note.title }}"
+            {%
+            endif
+            %}
+          />
+
+          <!-- Note Description with Formatting Tool -->
+          <div class="edit-note__description">
+            <!-- Toolbar -->
+            <div class="toolbar">
+              <ul class="tool-list">
+                <li class="tool">
+                  <button
+                    type="button"
+                    data-command="justifyLeft"
+                    class="tool--btn"
+                  >
+                    <i class="fas fa-align-left"></i>
+                  </button>
+                </li>
+                <li class="tool">
+                  <button
+                    type="button"
+                    data-command="justifyCenter"
+                    class="tool--btn"
+                  >
+                    <i class="fas fa-align-center"></i>
+                  </button>
+                </li>
+                <li class="tool">
+                  <button type="button" data-command="bold" class="tool--btn">
+                    <i class="fas fa-bold"></i>
+                  </button>
+                </li>
+                <li class="tool">
+                  <button type="button" data-command="italic" class="tool--btn">
+                    <i class="fas fa-italic"></i>
+                  </button>
+                </li>
+                <li class="tool">
+                  <button
+                    type="button"
+                    data-command="underline"
+                    class="tool--btn"
+                  >
+                    <i class="fas fa-underline"></i>
+                  </button>
+                </li>
+                <li class="tool">
+                  <button
+                    type="button"
+                    data-command="insertOrderedList"
+                    class="tool--btn"
+                  >
+                    <i class="fas fa-list-ol"></i>
+                  </button>
+                </li>
+                <li class="tool">
+                  <button
+                    type="button"
+                    data-command="insertUnorderedList"
+                    class="tool--btn"
+                  >
+                    <i class="fas fa-list-ul"></i>
+                  </button>
+                </li>
+                <li class="tool">
+                  <input type="color" id="textColorPicker" class="tool--color-picker" />
+                </li>
+              </ul>
+            </div>
+
+            <div id="output" contenteditable="true">
+              {% if note %}{{ note.body|striptags }}{% endif %}
+            </div>
+          </div>
+
+          <textarea
+            name="body"
+            id="hiddenBody"
+            style="display: none"
+          ></textarea>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn">
+            {% if note %} Edit note {% else %} Add note {% endif %}
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      let output = document.getElementById("output");
+      let buttons = document.getElementsByClassName("tool--btn");
+      let colorPicker = document.getElementById("textColorPicker");
+
+      colorPicker.addEventListener("input", () => {
+      let color = colorPicker.value;
+      document.execCommand("foreColor", false, color);});
+
+      for (let btn of buttons) {
+        btn.addEventListener("click", () => {
+          let cmd = btn.dataset["command"];
+          if (cmd === "createlink") {
+            let url = prompt("Enter the link here: ", "http://");
+            document.execCommand(cmd, false, url);
+          } else {
+            document.execCommand(cmd, false, null);
+          }
+        });
+      }
+
+      document
+        .getElementById("noteForm")
+        .addEventListener("submit", function () {
+          let hiddenBody = document.getElementById("hiddenBody");
+          hiddenBody.value = output.innerHTML;
+        });
+    </script>
+  </body>
+</html>

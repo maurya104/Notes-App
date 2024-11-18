@@ -1,0 +1,20 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+<link rel="stylesheet" href="{% static 'css/highlight.css' %}" />
+<div class="highlighted-text-container">
+  {% if keyword %}
+  <h3 class="highlighted-text__title">Highlighted Note:</h3>
+  <p class="highlighted-text__content" >{{ keyword|safe }}</p>
+  {% else %}
+  <p class="no-keywords">No keywords found in the note.</p>
+  {% endif %}
+</div>
+<center>
+  <button
+    class="btn home-btn"
+    onclick="window.location.href=`{% url 'home' %}`;"
+  >
+    <i class="fa-solid fa-home"></i> Back to Home
+  </button>
+</center>
+
+{% endblock content %}

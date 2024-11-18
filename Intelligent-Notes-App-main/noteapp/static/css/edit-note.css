@@ -1,0 +1,72 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  background-color: #f5f5f5;
+  margin: 0;
+}
+
+.container {
+  width: 60%;
+  display: grid;
+  gap: 20px;
+}
+
+.edit-note__title {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.edit-note__description {
+  border: 1px solid #333;
+  border-radius: 5px;
+  background-color: white;
+  padding: 10px;
+}
+
+.tool-list {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.tool--btn {
+  border: none;
+  border-radius: 5px;
+  height: 30px;
+  width: 30px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.tool--btn:hover {
+  background-color: #dddddd;
+}
+
+#output {
+  height: 200px;
+  padding: 10px;
+  border: none;
+  background-color: #f5f5f5;
+  overflow-y: auto;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}

@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django-crispy-forms = "==1.9.0"
+bleach = "*"
+spacy = "*"
+keybert = {extras = ["spacy"], version = "*"}
+flashtext = "*"
+rake-nltk = "*"
+nltk = "*"
+groq = "*"
+pyspellchecker = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"

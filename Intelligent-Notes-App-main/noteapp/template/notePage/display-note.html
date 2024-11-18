@@ -1,0 +1,70 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/display-note.css' %}" />
+
+<div class="note-item__container note {% if note.is_pinned %}pinned{% endif %}">
+  {% if note.is_pinned %}
+  <i class="fa-solid fa-thumbtack note-item__pin-icon"></i>
+  {% endif %}
+
+  <!-- Note options (pin, edit, delete) at the bottom -->
+  <div class="note-tools-container">
+    <span class="note-date"> {{ note.created|date }} </span>
+    <div class="note-options">
+      <button
+        class="icon-btn option"
+        title="{% if note.is_pinned %} Unpin {% else %} Pin {% endif %}"
+        onclick="window.location.href=`{% url 'pin-note' note.id %}`;">
+        <i class="fa-solid fa-thumbtack"></i>
+      </button>
+
+      <button
+        class="icon-btn option"
+        title="Edit"
+        onclick="window.location.href=`{% url 'edit-note' note.id %}`;">
+        <i class="fa-solid fa-pencil"></i>
+      </button>
+
+      <button
+        class="icon-btn option"
+        title="Delete"
+        onclick="window.location.href=`{% url 'delete-note' note.id %}`;">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Note content -->
+  <h2 class="note__title">{{ note.title }}</h2>
+  <!-- <p class="note__body">{{ note.body|linebreaks|striptags }}</p> -->
+  <div id="display-area"></div>
+  <!-- Separate buttons for Summarize and Highlight -->
+  <div class="note-summary-buttons">
+    <button
+      class="btn summarize-btn"
+      onclick="window.location.href=`{% url 'summaries-note' note.id%}`;">
+      <i class="fa-solid fa-align-left"></i> Summarize
+    </button>
+
+    <button
+      class="btn highlight-btn"
+      onclick="window.location.href=`{% url 'highLight-note' note.id%}`;">
+      <i class="fa-solid fa-align-left"></i> Highlight
+    </button>
+  </div>
+
+  <p class="note-summary" id="note-summary-{{ note.id }}" style="display: none"></p>
+
+  <div class="divider"></div>
+</div>
+
+
+
+<script>
+  const modifiedText = `{{ note.body|safe|escapejs }}`;
+  document.getElementById("display-area").innerHTML = modifiedText;
+</script>
+
+
+{% endblock content %}

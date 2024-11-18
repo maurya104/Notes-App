@@ -1,0 +1,23 @@
+{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+    <link rel="icon" href="{% static 'img/password.png' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&family=Open+Sans:wght@300;400;700&display=swap">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit">Login</button>
+        </form>
+        <br>
+        <a href="{% url 'signup' %}">Not Have account?</a>
+    </div>
+</body>
+</html>

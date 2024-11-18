@@ -1,0 +1,185 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Signup</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&family=Open+Sans:wght@300;400;700&display=swap"
+    />
+    <style>
+      :root {
+        --global-transition: 150ms color linear,
+          200ms background-color ease-in-out, 150ms width linear,
+          200ms border-color linear, transform 200ms linear, margin 220ms linear,
+          150ms opacity linear, 150ms box-shadow linear;
+        --color-white: #ffffff;
+        --color-dark: #232527;
+        --color-primary: #21222a;
+        --color-secondary: #f1faee; /* Background color */
+        --color-gray: #626262;
+        --font-color: #000000;
+      }
+
+      body {
+        background-color: var(--color-secondary);
+        font-size: 16px;
+        line-height: 24px;
+        font-family: "Open Sans", "sans-serif";
+        padding: 10px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; 
+        margin: 0;
+      }
+
+      .signup-container {
+        background-color: var(
+          --color-white
+        );
+        color: var(--color-dark);
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px; 
+        max-width: 600px; 
+        width: 100%;
+        box-sizing: border-box;
+        margin: 20px auto; 
+        overflow: hidden; 
+      }
+
+      h2 {
+        margin-bottom: 20px;
+        font-size: 24px;
+        text-align: center;
+        font-family: "Nunito", sans-serif;
+        font-weight: 600;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid var(--color-gray);
+        border-radius: 4px;
+        background-color: var(--color-white);
+        color: var(--color-dark);
+        font-size: 16px;
+      }
+
+      button {
+        background-color: var(--color-dark);
+        color: var(--color-white);
+        border: none;
+        padding: 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        font-family: "Open Sans", sans-serif;
+        transition: background-color var(--global-transition);
+        margin-bottom: 10px; 
+      }
+
+      button:hover {
+        background-color: #f0c674;
+      }
+
+      .form-group label.required::after {
+        content: "";
+      }
+
+      @media (max-width: 768px) {
+        .signup-container {
+          padding: 20px;
+          box-shadow: none; 
+          max-width: 90%;
+        }
+
+        h2 {
+          font-size: 20px;
+          margin-bottom: 15px;
+        }
+
+        .form-group {
+          margin-bottom: 15px;
+        }
+
+        .form-group label {
+          font-size: 14px; 
+        }
+
+        .form-group input {
+          padding: 10px; 
+          font-size: 14px;
+        }
+
+        button {
+          padding: 10px;
+          font-size: 14px; 
+        }
+      }
+
+      @media (max-width: 480px) {
+        .signup-container {
+          padding: 15px; 
+          max-width: 100%; 
+        }
+
+        h2 {
+          font-size: 18px; 
+          margin-bottom: 10px; 
+        }
+
+        .form-group {
+          margin-bottom: 10px; 
+        }
+
+        .form-group label {
+          font-size: 12px;
+        }
+
+        .form-group input {
+          padding: 8px; 
+          font-size: 12px; 
+        }
+
+        button {
+          padding: 8px; 
+          font-size: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="signup-container">
+      <h2>Sign Up</h2>
+      <form method="post">
+        {% csrf_token %} {{ form|crispy }}
+        <button type="submit">Sign Up</button>
+        <button
+          type="button"
+          class="login-btn"
+          onclick="window.location.href=`{% url 'login' %}`;"
+        >
+          Login
+        </button>
+      </form>
+    </div>
+  </body>
+</html>

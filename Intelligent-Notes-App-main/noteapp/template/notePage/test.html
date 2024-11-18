@@ -1,0 +1,15 @@
+<h2>Note Content</h2>
+<p>{{ note.body }}</p>
+
+<h3>Spelling Corrections</h3>
+{% if misspelled_words %}
+    <ul>
+        {% for word in misspelled_words %}
+            <li>
+                <strong>{{ word|safe }}</strong> - Suggested Correction: {{ suggestions.word|safe }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No misspelled words found or grammar check not yet performed.</p>
+{% endif %}
